@@ -1,0 +1,57 @@
+--CREATE TABLE produtos (
+--    id SERIAL PRIMARY KEY,
+--    nome VARCHAR(100) NOT NULL,
+--    categoria VARCHAR(50) NOT NULL,
+--    preco NUMERIC(10,2) NOT NULL,
+--    estoque INTEGER NOT NULL
+--);
+--
+--CREATE TABLE mesas (
+--    id SERIAL PRIMARY KEY,
+--    numero INTEGER NOT NULL,
+--    capacidade INTEGER NOT NULL,
+--    status VARCHAR(30) NOT NULL
+--);
+--
+--CREATE TABLE pedidos (
+--    id SERIAL PRIMARY KEY,
+--    mesa_id INTEGER NOT NULL,
+--    produto_id INTEGER NOT NULL,
+--    quantidade INTEGER NOT NULL,
+--    valor_total NUMERIC(10,2) NOT NULL,
+--
+--    CONSTRAINT fk_mesa
+--        FOREIGN KEY (mesa_id)
+--        REFERENCES mesas(id),
+--
+--    CONSTRAINT fk_produto
+--        FOREIGN KEY (produto_id)
+--        REFERENCES produtos(id)
+--);
+
+--INSERT INTO mesas (numero, capacidade, status) VALUES
+--(1, 4, 'disponivel'),
+--(2, 2, 'ocupada'),
+--(3, 6, 'disponivel'),
+--(4, 4, 'reservada'),
+--(5, 8, 'ocupada');
+--
+--INSERT INTO produtos (nome, categoria, preco, estoque) VALUES
+--('X-Burguer',     'Lanches',   25.90, 50),
+--('Coca-Cola 350ml','Bebidas',   7.50, 100),
+--('Batata Frita',  'Porcoes',   15.00, 40),
+--('Frango Grelhado','Pratos',   38.90, 20),
+--('Suco de Laranja','Bebidas',  10.00, 60);
+--
+--INSERT INTO pedidos (mesa_id, produto_id, quantidade, valor_total) VALUES
+--(1, 1, 2, 51.80),
+--(2, 2, 3, 22.50),
+--(3, 3, 1, 15.00),
+--(4, 4, 2, 77.80),
+--(5, 5, 4, 40.00);
+
+--select * from mesas m 
+
+--select * from pedidos p 
+
+--select * from produtos p
