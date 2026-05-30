@@ -22,14 +22,15 @@ async def test_connection():
     await conn.close()
     return {"message": "Conexão com o PostgreSQL bem-sucedida!"}
 
+
+
+# ------------ TABELA DE PRODUTOS ------------
 class Produto(BaseModel):
     nome: str
     categoria: str
     preco: float
     estoque: int
-
-
-# ------------ TABELA DE PRODUTOS ------------
+    
 @app.post("/produtos")
 async def create_product(produto: Produto):
     conn = await get_db_connection()
@@ -102,11 +103,11 @@ async def get_mesas():
     return {"mesas": mesas}
 
 # Mudar o status de uma mesa
-class Mesa_status(BaseModel):
+class MesaStatus(BaseModel):
     status: str
 
 @app.patch("/mesas/{id}")
-async def update_mesa(id: int, mesa: Mesa_status):
+async def update_mesa(id: int, mesa: MesaStatus):
     conn = await get_db_connection()
     result = await conn.execute(
         "UPDATE mesas SET status = $1 WHERE id = $2",
@@ -117,4 +118,3 @@ async def update_mesa(id: int, mesa: Mesa_status):
         return {"message": "Status atualizado com sucesso!"}
     else:
         raise HTTPException(status_code=404, detail="Mesa não encontrada.")
-    
