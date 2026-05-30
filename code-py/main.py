@@ -28,6 +28,8 @@ class Produto(BaseModel):
     preco: float
     estoque: int
 
+
+# ------------ TABELA DE PRODUTOS ------------
 @app.post("/produtos")
 async def create_product(produto: Produto):
     conn = await get_db_connection()
@@ -83,3 +85,36 @@ async def delete_product(produto_id: int):
         return {"message": f"Produto {produto_id} deletado com sucesso!"}
     else:
         raise HTTPException(status_code=404, detail="Produto não encontrado.")
+    
+
+# ------------ TABELA MESAS ------------
+
+@app.get("/mesas")
+async def get_mesas():
+    conn = await get_db_connection()
+    rows = await conn.fetch(
+        "SELECT * FROM mesas"
+    )
+    await conn.close()
+    mesas = []
+    for row in rows:
+        mesas.append(f"ID da mesa: {row['id']}, Número: {row['numero']}, Capacidade: {row['capacidade']}, Status: {row['status']}")
+    return {"mesas": mesas}
+
+# Mudar o status de uma mesa
+class Mesa_status(BaseModel):
+    status: str
+
+@app.patch("/mesas/{id}")
+async def update_mesa(id: int, mesa: Mesa_status):
+    conn = await get_db_connection()
+    result = await conn.execute(
+        "UPDATE mesas SET status = $1 WHERE id = $2",
+        mesa.status, id
+    )
+    await conn.close()
+    if result == "UPDATE 1":
+        return {"message": "Status atualizado com sucesso!"}
+    else:
+        raise HTTPException(status_code=404, detail="Mesa não encontrada.")
+    
