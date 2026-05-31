@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel, Field
 import asyncpg
 
@@ -56,7 +56,7 @@ async def get_product(produto_id: int):
     conn = await get_db_connection()
     produto = await conn.fetchrow("SELECT * FROM produtos WHERE id = $1", produto_id)
     await conn.close()
-    return {"produto": f"ID do produto: {produto['id']}, Nome: {produto['nome']}, Categoria: {produto['categoria']}, Preço: {produto['preco']}, Estoque: {produto['estoque']}"}
+    return {"produto": f"id: {produto['id']}, nome: {produto['nome']}, categoria: {produto['categoria']}, preco: {produto['preco']}, estoque: {produto['estoque']}"}
 
 @app.put("/produtos/{produto_id}")
 async def update_product(produto_id: int, produto: Produto):
@@ -99,7 +99,7 @@ async def get_mesas():
     await conn.close()
     mesas = []
     for row in rows:
-        mesas.append(f"ID da mesa: {row['id']}, Número: {row['numero']}, Capacidade: {row['capacidade']}, Status: {row['status']}")
+        mesas.append(f"id: {row['id']}, numero: {row['numero']}, capacidade: {row['capacidade']}, status: {row['status']}")
     return {"mesas": mesas}
 
 # Mudar o status de uma mesa
